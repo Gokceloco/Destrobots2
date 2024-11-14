@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100, playerLookAtRayLayerMask))
         {
-            
+            transform.LookAt(hit.point);
         }
     }
 
