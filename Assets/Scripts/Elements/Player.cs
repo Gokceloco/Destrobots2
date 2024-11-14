@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +10,11 @@ public class Player : MonoBehaviour
 
     public float smoothTime;
     private Vector3 _velocity;
+
+    public void ShakeCamera(float duration, float magnitude)
+    {
+        Camera.main.transform.DOShakePosition(duration, magnitude);
+    }
 
     private void FixedUpdate()
     {
