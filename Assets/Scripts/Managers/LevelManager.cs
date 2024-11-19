@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour
         {
             var newBlock = Instantiate(blockPrefab);
             newBlock.transform.position = new Vector3(0, 0, 10 * i);
+            newBlock.StartBlock(i);
         }        
     }
 }

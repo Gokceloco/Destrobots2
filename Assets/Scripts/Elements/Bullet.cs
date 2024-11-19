@@ -16,4 +16,13 @@ public class Bullet : MonoBehaviour
     {
         _rb.position += transform.forward * Time.deltaTime * bulletSpeed;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            other.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+        }
+    }
 }

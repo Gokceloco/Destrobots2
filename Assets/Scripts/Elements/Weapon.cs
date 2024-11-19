@@ -22,6 +22,6 @@ public class Weapon : MonoBehaviour
         newBullet.transform.position = bulletSpawnPoint.position;
         newBullet.transform.LookAt(newBullet.transform.position + bulletSpawnPoint.forward * 10);
 
-        player.ShakeCamera(.5f, .25f);
+        player.cameraHolder.ShakeCamera(.5f, .25f);
     }
 }

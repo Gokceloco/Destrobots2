@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Enemy enemyPrefab;
+
+    private int _blockNo;
+
+    public int enemyCount;
+
+    public void StartBlock(int no)
     {
-        
+        _blockNo = no;
+
+        GenerateEnemies();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void GenerateEnemies()
     {
-        
+        var difficultyScale = _blockNo / 3;
+
+        if (_blockNo == 0) 
+        {
+            enemyCount = 0;
+        }
+        else
+        {
+            enemyCount = difficultyScale + 1;
+        }
+
+        for (int i = 0; i < enemyCount; i++)
+        {
+            var newEnemy = Instantiate(enemyPrefab, transform);
+            newEnemy.transform.localPosition = new Vector3(i - enemyCount / 2f, 0, 3.5f);
+        }
     }
 }

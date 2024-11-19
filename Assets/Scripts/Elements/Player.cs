@@ -6,20 +6,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Transform cameraHolder;
+    public CameraHolder cameraHolder;
 
     public float smoothTime;
-    private Vector3 _velocity;
-
-    public void ShakeCamera(float duration, float magnitude)
-    {
-        Camera.main.transform.DOShakePosition(duration, magnitude);
-    }
+    private Vector3 _velocity;    
 
     private void FixedUpdate()
     {
         var pos = transform.position;
         pos.y = 0f;
-        cameraHolder.position = Vector3.SmoothDamp(cameraHolder.position, pos, ref _velocity, smoothTime);
+        cameraHolder.transform.position             
+            = Vector3.SmoothDamp(cameraHolder.transform.position, pos, ref _velocity, smoothTime);
     }
 }
