@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameDirector : MonoBehaviour
 {
     public LevelManager levelManager;
+    public FxManager fxManager;
     private void Start()
     {
         RestartGame();

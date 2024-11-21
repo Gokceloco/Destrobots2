@@ -10,10 +10,12 @@ public class Block : MonoBehaviour
 
     public int enemyCount;
 
-    public void StartBlock(int no)
+    private Player _player;
+
+    public void StartBlock(int no, Player player)
     {
         _blockNo = no;
-
+        _player = player;
         GenerateEnemies();
     }
 
@@ -34,6 +36,7 @@ public class Block : MonoBehaviour
         {
             var newEnemy = Instantiate(enemyPrefab, transform);
             newEnemy.transform.localPosition = new Vector3(i - enemyCount / 2f, 0, 3.5f);
+            newEnemy.StartEnemy(_player);
         }
     }
 }

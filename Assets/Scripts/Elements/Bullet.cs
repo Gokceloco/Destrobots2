@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    private GameDirector _gameDirector;
     public float bulletSpeed;
+    public int damage;
+    public float pushForce;
 
     private Rigidbody _rb;
-    private void Start()
+    public void StartBullet(GameDirector gameDirector)
     {
         _rb = GetComponent<Rigidbody>();
+        _gameDirector = gameDirector;
     }
 
     void Update()
@@ -21,7 +25,8 @@ public class Bullet : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.gameObject.SetActive(false);
+            other.GetComponentInParent<Enemy>().GetHit(damage, transform.forward, pushForce);
+            _gameDirector.fxManager.PlayBulletHitParticles(transform.position);
             gameObject.SetActive(false);
         }
     }

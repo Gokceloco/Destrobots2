@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 20
+  damage: 1
+  pushForce: 1
 --- !u!54 &6893141013344228911
 Rigidbody:
   m_ObjectHideFlags: 0

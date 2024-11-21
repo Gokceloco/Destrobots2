@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public GameDirector gameDirector;
     public Player player;
     public Bullet bulletPrefab;
     public Transform bulletSpawnPoint;
+    public float attackRate;
+
+    public ParticleSystem muzzleFlashPS;
+
+    private float lastShootTime;
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButton(0) && Time.time - lastShootTime > attackRate)
         {
             Shoot();
         }
@@ -21,7 +27,12 @@ public class Weapon : MonoBehaviour
         var newBullet = Instantiate(bulletPrefab);
         newBullet.transform.position = bulletSpawnPoint.position;
         newBullet.transform.LookAt(newBullet.transform.position + bulletSpawnPoint.forward * 10);
+        newBullet.StartBullet(gameDirector);
 
-        player.cameraHolder.ShakeCamera(.5f, .25f);
+        muzzleFlashPS.Play();
+
+        lastShootTime = Time.time;
+
+        player.cameraHolder.ShakeCamera(.25f, .15f);
     }
 }

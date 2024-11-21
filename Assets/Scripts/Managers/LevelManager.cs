@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public Player player;
     public int mapLength;
 
     public Block blockPrefab;
     public List<Block> blocks;
+
+    public Enemy enemyPrefab;
     public void DeleteLevel()
     {
         
@@ -19,7 +23,7 @@ public class LevelManager : MonoBehaviour
         {
             var newBlock = Instantiate(blockPrefab);
             newBlock.transform.position = new Vector3(0, 0, 10 * i);
-            newBlock.StartBlock(i);
+            newBlock.StartBlock(i, player);
         }        
     }
 }
