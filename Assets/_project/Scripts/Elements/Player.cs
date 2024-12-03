@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public GameDirector gameDirector;
+    public float cameraOffsetByLookDirection;
     public CameraHolder cameraHolder;
 
     public float smoothTime;
@@ -16,9 +18,14 @@ public class Player : MonoBehaviour
         transform.position = Vector3.zero;
     }
 
+    public void DoorIsLocked()
+    {
+        gameDirector.DoorIsLocked();
+    }
+
     private void FixedUpdate()
     {
-        var pos = transform.position;
+        var pos = transform.position + transform.forward * cameraOffsetByLookDirection;
         //pos.y = 0f;
         cameraHolder.transform.position             
             = Vector3.SmoothDamp(cameraHolder.transform.position, pos, ref _velocity, smoothTime);

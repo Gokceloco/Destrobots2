@@ -50,7 +50,7 @@ MonoBehaviour:
   bulletSpeed: 30
   damage: 1
   pushForce: 2
-  maxDistance: 30
+  maxDistance: 10
 --- !u!54 &6893141013344228911
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class Weapon : MonoBehaviour
 {
@@ -12,8 +13,12 @@ public class Weapon : MonoBehaviour
     public float attackRate;
 
     public ParticleSystem muzzleFlashPS;
+    public Light muzzleFlashLight;
+    public float muzzleFlashLightDuration;
+    public float muzzleFlashLightIntensity;
 
     private float lastShootTime;
+
 
     void Update()
     {
@@ -30,9 +35,20 @@ public class Weapon : MonoBehaviour
         newBullet.StartBullet(gameDirector);
 
         muzzleFlashPS.Play();
+        ActivateMuzzleFlashLight();
+        Invoke(nameof(DeactivateMuzzleFlashLight), muzzleFlashLightDuration);
 
         lastShootTime = Time.time;
 
         player.cameraHolder.ShakeCamera(.25f, .15f);
+    }
+
+    private void ActivateMuzzleFlashLight()
+    {
+        muzzleFlashLight.intensity = muzzleFlashLightIntensity;
+    }
+    private void DeactivateMuzzleFlashLight()
+    {
+        muzzleFlashLight.intensity = 0f;
     }
 }

@@ -14,6 +14,23 @@ public class Door : MonoBehaviour
 
     public KeyType requiredKey;
 
+    public MeshRenderer doorColorPieceMR;
+
+    public Material lockedDoorMaterial;
+    public Material unLockedDoorMaterial;
+
+    private void Start()
+    {
+        if (isDoorLocked)
+        {
+            doorColorPieceMR.material = lockedDoorMaterial;
+        }
+        else
+        {
+            doorColorPieceMR.material = unLockedDoorMaterial;
+        }
+    }
+
     public void OpenCloseDoor(List<KeyType> acquiredKey)
     {
         var haveKey = false;

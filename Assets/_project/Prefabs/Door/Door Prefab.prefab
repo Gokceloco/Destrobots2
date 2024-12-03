@@ -51,6 +51,10 @@ MonoBehaviour:
   rightDoor: {fileID: 1504543973426091838}
   isDoorClosed: 1
   requiredKey: 2
+  doorColorPieceMR: {fileID: 763383878017524095}
+  lockedDoorMaterial: {fileID: 2100000, guid: f5e61e02adb694d4b858c709d6da4225, type: 2}
+  unLockedDoorMaterial: {fileID: 2100000, guid: f95161eaf261b124593b99c16d8c1d8b,
+    type: 2}
 --- !u!65 &6479323286091167926
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ public class GameDirector : MonoBehaviour
     public LevelManager levelManager;
     public FxManager fxManager;
 
+    public MainUI mainUI;
+
     private void Start()
     {
         RestartLevel();
@@ -27,5 +29,11 @@ public class GameDirector : MonoBehaviour
         levelManager.DeleteLevel();
         levelManager.GenerateLevel();
         player.RestartPlayer();
+        mainUI.RestartMainUI();
+    }
+
+    public void DoorIsLocked()
+    {
+        mainUI.ShowMessage("DOOR IS LOCKED! FIND THE KEY", 5);
     }
 }

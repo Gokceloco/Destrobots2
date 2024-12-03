@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,12 @@ public class Block : MonoBehaviour
         _blockNo = no;
         _player = player;
         GenerateEnemies();
-        foreach (var e in enemiesInMap)
+        StartEnemiesInMap();
+    }
+
+    private void StartEnemiesInMap()
+    {
+        foreach (Enemy e in enemiesInMap)
         {
             e.StartEnemy(_player);
         }

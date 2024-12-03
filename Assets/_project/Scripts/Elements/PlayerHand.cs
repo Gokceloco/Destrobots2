@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
+    public Player player;
     public Door door;
     public Transform touchingCrate;
     public Transform carryingCrate;
@@ -30,6 +31,10 @@ public class PlayerHand : MonoBehaviour
             else
             {
                 door.OpenCloseDoor(acquiredKeys);
+            }
+            if (!haveKey && door.isDoorLocked)
+            {
+                player.DoorIsLocked();
             }
         }
         else if (Input.GetKeyDown(KeyCode.E) && touchingCrate != null)
