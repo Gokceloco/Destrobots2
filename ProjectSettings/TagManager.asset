@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - Door
   - Key
+  - Ground
+  - Crate
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - Crate
   - 
   - 
   - 

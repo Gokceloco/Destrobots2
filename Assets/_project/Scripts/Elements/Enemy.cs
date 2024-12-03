@@ -32,16 +32,20 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        var directionVector = _player.transform.position - transform.position;
-        var direction = directionVector.normalized;
-        var distance = directionVector.magnitude;
-        if (distance < 10)
+        if (_player != null)
         {
-            _didSeePlayer = true;
-        }
-        if (_didSeePlayer)
-        {
-            _rb.position += direction * Time.deltaTime * speed;
-        }
+            var directionVector = _player.transform.position - transform.position;
+            var direction = directionVector.normalized;
+            var distance = directionVector.magnitude;
+            if (distance < 10)
+            {
+                _didSeePlayer = true;
+            }
+            if (_didSeePlayer)
+            {
+                direction.y = 0;
+                _rb.position += direction * Time.deltaTime * speed;
+            }
+        }        
     }
 }

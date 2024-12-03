@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         var pos = transform.position;
-        pos.y = 0f;
+        //pos.y = 0f;
         cameraHolder.transform.position             
             = Vector3.SmoothDamp(cameraHolder.transform.position, pos, ref _velocity, smoothTime);
     }

@@ -12,11 +12,17 @@ public class Block : MonoBehaviour
 
     private Player _player;
 
+    public List<Enemy> enemiesInMap;
+
     public void StartBlock(int no, Player player)
     {
         _blockNo = no;
         _player = player;
         GenerateEnemies();
+        foreach (var e in enemiesInMap)
+        {
+            e.StartEnemy(_player);
+        }
     }
 
     private void GenerateEnemies()

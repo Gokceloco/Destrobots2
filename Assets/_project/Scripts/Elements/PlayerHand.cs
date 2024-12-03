@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,15 +6,52 @@ using UnityEngine;
 public class PlayerHand : MonoBehaviour
 {
     public Door door;
+    public Transform touchingCrate;
+    public Transform carryingCrate;
 
     public bool haveKey;
+
+    public List<KeyType> acquiredKeys;
+
+    public void StartPlayerHand()
+    {
+        acquiredKeys.Clear();
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && door != null)
         {
-            door.OpenCloseDoor(haveKey);
+            if (haveKey && door.isDoorLocked)
+            {
+                haveKey = false;
+                door.OpenCloseDoor(acquiredKeys);
+            }
+            else
+            {
+                door.OpenCloseDoor(acquiredKeys);
+            }
         }
+        else if (Input.GetKeyDown(KeyCode.E) && touchingCrate != null)
+        {
+            touchingCrate.SetParent(transform);
+            touchingCrate.transform.DOKill();
+            touchingCrate.transform.DOLocalMove(new Vector3(0,1.5f, -1), .2f);
+            touchingCrate.transform.DOLocalRotate(new Vector3(0,90,0), .2f);
+            carryingCrate = touchingCrate;
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && carryingCrate != null)
+        {
+            carryingCrate.transform.DOKill();
+            carryingCrate.transform.DOLocalMove(new Vector3(0, -1, 1), .2f)
+                .OnComplete(()=>SetTransformToWorld(carryingCrate));
+            
+        }
+    }
+
+    void SetTransformToWorld(Transform t)
+    {
+        t.SetParent(null);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,8 +62,12 @@ public class PlayerHand : MonoBehaviour
         }
         if (other.CompareTag("Key"))
         {
-            haveKey = true;
+            acquiredKeys.Add(other.GetComponentInParent<Key>().keyType);
             other.gameObject.SetActive(false);
+        }
+        if (other.CompareTag("Crate"))
+        {
+            touchingCrate = other.transform.parent;
         }
     }
 
@@ -34,6 +76,10 @@ public class PlayerHand : MonoBehaviour
         if (other.CompareTag("Door"))
         {
             door = null;
+        }
+        if (other.CompareTag("Crate"))
+        {
+            touchingCrate = null;
         }
     }
 }

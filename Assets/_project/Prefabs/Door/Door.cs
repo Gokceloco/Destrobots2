@@ -12,8 +12,18 @@ public class Door : MonoBehaviour
 
     public bool isDoorClosed = true;
 
-    public void OpenCloseDoor(bool haveKey)
+    public KeyType requiredKey;
+
+    public void OpenCloseDoor(List<KeyType> acquiredKey)
     {
+        var haveKey = false;
+        foreach (var key in acquiredKey) 
+        {
+            if (key == requiredKey)
+            {
+                haveKey = true;
+            }
+        }
         if (isDoorLocked && !haveKey)
         {
             return;
@@ -23,6 +33,7 @@ public class Door : MonoBehaviour
             leftDoor.transform.DOMoveX(leftDoor.transform.position.x - 2, .3f);
             rightDoor.transform.DOMoveX(rightDoor.transform.position.x + 2, .3f);
             isDoorClosed = false;
+            isDoorLocked = false;
         }
         else
         {

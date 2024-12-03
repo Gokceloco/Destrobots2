@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     public float bulletSpeed;
     public int damage;
     public float pushForce;
+    public float maxDistance;
 
     private Rigidbody _rb;
     public void StartBullet(GameDirector gameDirector)
@@ -19,6 +20,10 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         _rb.position += transform.forward * Time.deltaTime * bulletSpeed;
+        if ((transform.position - _gameDirector.player.transform.position).magnitude > maxDistance)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,17 +32,17 @@ public class Bullet : MonoBehaviour
         {
             other.GetComponentInParent<Enemy>().GetHit(damage, transform.forward, pushForce);
             _gameDirector.fxManager.PlayBulletHitParticles(transform.position, Color.red);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
         if (other.CompareTag("Wall"))
         {
             _gameDirector.fxManager.PlayBulletHitParticles(transform.position, Color.gray);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
         if (other.CompareTag("Door") && other.GetComponent<Door>().isDoorClosed)
         {
             _gameDirector.fxManager.PlayBulletHitParticles(transform.position, Color.gray);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

@@ -14,6 +14,12 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject clickSprite;
 
+    public float jumpForce;
+
+    public bool isTouchingGround;
+    public float rayDistance;
+    public LayerMask groundLayerMask;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -25,6 +31,25 @@ public class PlayerMovement : MonoBehaviour
         {
             LookAtMouse();
         }
+
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, rayDistance, groundLayerMask))
+        {
+            isTouchingGround = true;
+        }
+        else
+        {
+            isTouchingGround = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isTouchingGround)
+        {
+            Jump();
+        }
+    }
+
+    private void Jump()
+    {
+        _rb.AddForce(Vector3.up * jumpForce);
     }
 
     private void LookAtMouse()
@@ -33,7 +58,9 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100, playerLookAtRayLayerMask))
         {
-            transform.LookAt(hit.point);
+            var lookPos = hit.point;
+            lookPos.y = transform.position.y;
+            transform.LookAt(lookPos);
         }
     }
 
@@ -56,6 +83,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             direction += Vector3.right;
+        }
+        if (!Input.anyKey)
+        {
+            var v = _rb.velocity;
+            v.x = 0;
+            v.z = 0;
+            _rb.velocity = v;
         }
         _rb.position += direction.normalized * playerMoveSpeed * Time.deltaTime;
     }
