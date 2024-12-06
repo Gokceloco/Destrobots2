@@ -9,10 +9,10 @@ public class MessageUI : MonoBehaviour
 {
     public TextMeshProUGUI msgTMP;
 
-    public void Show()
+    public void Show(float delay)
     {
         gameObject.SetActive(true);
-        GetComponent<CanvasGroup>().DOFade(1,.5f);
+        GetComponent<CanvasGroup>().DOFade(1,.5f).SetDelay(delay);
     }
 
     public void Hide()
@@ -25,9 +25,9 @@ public class MessageUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void ShowMessage(string msg, float duration)
+    public void ShowMessage(string msg, float duration, float delay = 0)
     {
-        Show();
+        Show(delay);
         msgTMP.text = msg;
         Invoke(nameof(Hide), duration);
     }

@@ -12,6 +12,11 @@ public class Enemy : MonoBehaviour
     private Rigidbody _rb;
 
     private bool _didSeePlayer;
+    private bool _isWalking;
+
+    public HealthBar healthBar;
+
+    public Animator animator;
 
     public void StartEnemy(Player player)
     {
@@ -28,6 +33,7 @@ public class Enemy : MonoBehaviour
             gameObject.SetActive(false);
         }
         _rb.AddForce(direction * pushForce, ForceMode.Impulse);
+        healthBar.UpdateHealthBar((float)_currentHealth / startHealth);
     }
 
     private void Update()
@@ -45,6 +51,12 @@ public class Enemy : MonoBehaviour
             {
                 direction.y = 0;
                 _rb.position += direction * Time.deltaTime * speed;
+                transform.LookAt(_player.transform.position);
+                if (!_isWalking)
+                {
+                    animator.SetTrigger("Walk");
+                    _isWalking = true;
+                }
             }
         }        
     }

@@ -47,16 +47,14 @@ public class Door : MonoBehaviour
         }
         if (isDoorClosed)
         {
-            leftDoor.transform.DOMoveX(leftDoor.transform.position.x - 2, .3f);
-            rightDoor.transform.DOMoveX(rightDoor.transform.position.x + 2, .3f);
+            leftDoor.transform.DOLocalMoveZ(leftDoor.transform.localPosition.z + 1, .3f);
+            rightDoor.transform.DOLocalMoveZ(rightDoor.transform.localPosition.z - 1, .3f);
             isDoorClosed = false;
             isDoorLocked = false;
         }
         else
         {
-            leftDoor.transform.DOMoveX(leftDoor.transform.position.x + 2, .3f);
-            rightDoor.transform.DOMoveX(rightDoor.transform.position.x - 2, .3f);
-            isDoorClosed = true;
+            CloseDoor();
         }
     }
 
@@ -64,9 +62,14 @@ public class Door : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isDoorClosed)
         {
-            leftDoor.transform.DOMoveX(leftDoor.transform.position.x + 2, .3f);
-            rightDoor.transform.DOMoveX(rightDoor.transform.position.x - 2, .3f);
-            isDoorClosed = true;
+            CloseDoor();
         }
+    }
+
+    private void CloseDoor()
+    {
+        leftDoor.transform.DOLocalMoveZ(leftDoor.transform.localPosition.z - 1, .3f);
+        rightDoor.transform.DOLocalMoveZ(rightDoor.transform.localPosition.z + 1, .3f);
+        isDoorClosed = true;
     }
 }

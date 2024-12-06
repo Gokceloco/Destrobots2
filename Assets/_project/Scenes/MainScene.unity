@@ -1084,7 +1084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2084266469}
-  door: {fileID: 0}
+  touchingDoor: {fileID: 0}
   touchingCrate: {fileID: 0}
   carryingCrate: {fileID: 0}
   haveKey: 0
