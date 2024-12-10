@@ -31,17 +31,18 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             other.GetComponentInParent<Enemy>().GetHit(damage, transform.forward, pushForce);
-            _gameDirector.fxManager.PlayBulletHitParticles(transform.position, Color.red);
+            _gameDirector.fxManager.PlayBulletHitPS(transform.position, Color.red);
+            _gameDirector.audioManager.PlayZombieImpactSFX();
             Destroy(gameObject);
         }
         if (other.CompareTag("Wall"))
         {
-            _gameDirector.fxManager.PlayBulletHitParticles(transform.position, Color.gray);
+            _gameDirector.fxManager.PlayBulletHitPS(transform.position, Color.gray);
             Destroy(gameObject);
         }
         if (other.CompareTag("Door") && other.GetComponent<Door>().isDoorClosed)
         {
-            _gameDirector.fxManager.PlayBulletHitParticles(transform.position, Color.gray);
+            _gameDirector.fxManager.PlayBulletHitPS(transform.position, Color.gray);
             Destroy(gameObject);
         }
     }

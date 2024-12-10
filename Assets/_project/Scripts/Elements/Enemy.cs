@@ -6,38 +6,61 @@ public class Enemy : MonoBehaviour
 {
     public float speed;
     public int startHealth;
+    public CapsuleCollider deadCoolider;
+    public Transform chestBone;
+
     private int _currentHealth;
 
     private Player _player;
     private Rigidbody _rb;
 
     private bool _didSeePlayer;
-    private bool _isWalking;
 
     public HealthBar healthBar;
 
-    public Animator animator;
+    private Animator _animator;
+
+    private bool _isWalking;
+    private bool _isDead;
 
     public void StartEnemy(Player player)
     {
         _player = player;
         _rb = GetComponent<Rigidbody>();
         _currentHealth = startHealth;
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public void GetHit(int damage, Vector3 direction, float pushForce)
     {
+        if (_isDead)
+        {
+            return;
+        }
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
-            gameObject.SetActive(false);
+            Die();
         }
         _rb.AddForce(direction * pushForce, ForceMode.Impulse);
         healthBar.UpdateHealthBar((float)_currentHealth / startHealth);
     }
 
+    private void Die()
+    {
+        _isDead = true;
+        deadCoolider.gameObject.SetActive(true);
+        _animator.SetTrigger("Fall");
+        _player.gameDirector.fxManager.PlayEnemyExpirePSDelayed(chestBone, 1.9f);
+        Destroy(gameObject, 2f);
+    }
+
     private void Update()
     {
+        if (_isDead)
+        {
+            return;
+        }
         if (_player != null)
         {
             var directionVector = _player.transform.position - transform.position;
@@ -54,8 +77,8 @@ public class Enemy : MonoBehaviour
                 transform.LookAt(_player.transform.position);
                 if (!_isWalking)
                 {
-                    animator.SetTrigger("Walk");
                     _isWalking = true;
+                    _animator.SetTrigger("Walk");
                 }
             }
         }        

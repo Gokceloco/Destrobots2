@@ -36,6 +36,7 @@ public class Weapon : MonoBehaviour
 
         muzzleFlashPS.Play();
         ActivateMuzzleFlashLight();
+        gameDirector.audioManager.PlayGunSotSFX();
         Invoke(nameof(DeactivateMuzzleFlashLight), muzzleFlashLightDuration);
 
         lastShootTime = Time.time;

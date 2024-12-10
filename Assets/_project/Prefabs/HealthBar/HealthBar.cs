@@ -8,10 +8,18 @@ public class HealthBar : MonoBehaviour
     public SpriteRenderer fillBar;
     public Color fillColor;
 
+    private Camera _mainCamera;
+
     private void Start()
     {
+        _mainCamera = Camera.main;
         fillBar.color = fillColor;
         gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        transform.LookAt(_mainCamera.transform.position);
     }
 
     public void UpdateHealthBar(float ratio)
