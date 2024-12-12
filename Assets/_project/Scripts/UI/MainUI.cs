@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainUI : MonoBehaviour
 {
     public MessageUI messageUI;
+    public PlayerHitUI playerHitUI;
 
     public void RestartMainUI()
     {

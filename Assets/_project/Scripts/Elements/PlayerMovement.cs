@@ -20,9 +20,17 @@ public class PlayerMovement : MonoBehaviour
     public float rayDistance;
     public LayerMask groundLayerMask;
 
+    private Animator _animator;
+    private bool _isWalking;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _animator = GetComponentInChildren<Animator>();
+    }
+    public void ResetPlayerMovement()
+    {
+        _isWalking = false;
     }
     private void Update()
     {
@@ -91,6 +99,29 @@ public class PlayerMovement : MonoBehaviour
             v.z = 0;
             _rb.velocity = v;
         }
+        if (Input.GetKey(KeyCode.W) 
+            || Input.GetKey(KeyCode.A) 
+            || Input.GetKey(KeyCode.D) 
+            || Input.GetKey(KeyCode.S))
+        {
+            if (!_isWalking)
+            {
+                _isWalking = true;
+                _animator.SetTrigger("Walk");
+            }
+        }
+        else
+        {
+            if (_isWalking)
+            {
+                _isWalking = false;
+                _animator.SetTrigger("Idle");
+            }
+        }
         _rb.position += direction.normalized * playerMoveSpeed * Time.deltaTime;
+        var angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+        _animator.SetFloat("WalkDirection", angle);
     }
+
+    
 }
