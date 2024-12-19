@@ -23,15 +23,21 @@ public class PlayerMovement : MonoBehaviour
     private Animator _animator;
     private bool _isWalking;
 
-    private void Start()
+    public void ResetPlayerMovement()
     {
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponentInChildren<Animator>();
-    }
-    public void ResetPlayerMovement()
-    {
         _isWalking = false;
+        ResetTriggers();
+        _animator.SetTrigger("Idle");
     }
+
+    private void ResetTriggers()
+    {
+        _animator.ResetTrigger("Walk");
+        _animator.ResetTrigger("Idle");
+    }
+
     private void Update()
     {
         MovePlayer();
@@ -107,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
             if (!_isWalking)
             {
                 _isWalking = true;
+                ResetTriggers();
                 _animator.SetTrigger("Walk");
             }
         }
@@ -115,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
             if (_isWalking)
             {
                 _isWalking = false;
+                ResetTriggers();
                 _animator.SetTrigger("Idle");
             }
         }

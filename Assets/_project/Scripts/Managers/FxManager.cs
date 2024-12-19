@@ -9,6 +9,15 @@ public class FxManager : MonoBehaviour
     public ParticleSystem bulletHitPS;
     public ParticleSystem enemyExpirePS;
     public ParticleSystem keyPickedUpPS;
+    public ParticleSystem serumPickedUpPS;
+
+    public void PlaySerumPickedUpPS(Vector3 pos)
+    {
+        var newPS = Instantiate(serumPickedUpPS);
+        newPS.transform.position = pos;
+        newPS.Play();
+    }
+
     public void PlayBulletHitPS(Vector3 pos, Color color)
     {
         var newPS = Instantiate(bulletHitPS);

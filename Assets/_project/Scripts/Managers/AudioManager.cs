@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     public AudioSource gunShotAS;
     public AudioSource zombieImpactAS;
+    public AudioSource positiveAS;
     public AudioSource music1LoopAS;
     public void PlayGunSotSFX()
     {
@@ -14,5 +15,9 @@ public class AudioManager : MonoBehaviour
     public void PlayZombieImpactSFX()
     {
         zombieImpactAS.Play();
+    }
+    public void PlayPositiveSFX()
+    {
+        positiveAS.Play();  
     }
 }

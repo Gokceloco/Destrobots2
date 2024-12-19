@@ -8,12 +8,14 @@ public class Enemy : MonoBehaviour
     public float speed;
     public int startHealth;
     public CapsuleCollider deadCoolider;
+    public CapsuleCollider aliveColldier;
     public Transform chestBone;
 
     private int _currentHealth;
 
     private Player _player;
     private Rigidbody _rb;
+    private Block _block;
 
     private bool _didSeePlayer;
 
@@ -25,10 +27,17 @@ public class Enemy : MonoBehaviour
     private bool _isDead;
     private bool _isHittingPlayer;
 
-    public void StartEnemy(Player player)
+    public LayerMask seeLayerMask;
+
+    public Collectable serumPrefab;
+
+    public float dropSerumChance;
+
+    public void StartEnemy(Player player, Block block)
     {
         _player = player;
         _rb = GetComponent<Rigidbody>();
+        _block = block;
         _currentHealth = startHealth;
         _animator = GetComponentInChildren<Animator>();
         RandomizeIdle();
@@ -59,11 +68,23 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        if (UnityEngine.Random.value < dropSerumChance)
+        {
+            DropCollectable();
+        }
         _isDead = true;
+        aliveColldier.gameObject.SetActive(false);
         deadCoolider.gameObject.SetActive(true);
         _animator.SetTrigger("Fall");
         _player.gameDirector.fxManager.PlayEnemyExpirePSDelayed(chestBone, 1.9f);
         Destroy(gameObject, 2f);
+    }
+
+    private void DropCollectable()
+    {
+        var newCol = Instantiate(serumPrefab, _block.transform);
+        newCol.transform.position = transform.position;
+        newCol.StartCollectable();
     }
 
     private void Update()
@@ -77,7 +98,7 @@ public class Enemy : MonoBehaviour
             var directionVector = _player.transform.position - transform.position;
             var direction = directionVector.normalized;
             var distance = directionVector.magnitude;
-            if (distance < 10)
+            if (distance < 10 && GetIfEnemySeesPlayer())
             {
                 _didSeePlayer = true;
             }
@@ -88,11 +109,28 @@ public class Enemy : MonoBehaviour
         }        
     }
 
+    bool GetIfEnemySeesPlayer()
+    {
+        RaycastHit hit;
+        var directionVector = (_player.transform.position + Vector3.up) 
+            - (transform.position + Vector3.up);
+        Debug.DrawRay(transform.position + Vector3.up, directionVector, Color.red);
+        if (Physics.Raycast(transform.position + Vector3.up,
+            directionVector, out hit,
+            directionVector.magnitude, seeLayerMask))
+        {
+            return false;
+        }
+        return true;
+    }
+
     private void MoveEnemy(Vector3 direction)
     {
         direction.y = 0;
         _rb.position += direction * Time.deltaTime * speed;
-        transform.LookAt(_player.transform.position);
+        var lookPos = _player.transform.position;
+        lookPos.y = transform.position.y;
+        transform.LookAt(lookPos);
         if (!_isWalking)
         {
             _isWalking = true;

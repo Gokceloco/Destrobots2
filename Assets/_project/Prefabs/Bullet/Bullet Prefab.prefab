@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7289280519577773307}
   - component: {fileID: 5028729068376742606}
   - component: {fileID: 6893141013344228911}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 8119114684222155211}
   - component: {fileID: 5171275107909938377}
   - component: {fileID: 8462169085584290021}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7057772562978157110}
   - component: {fileID: 725285606865248299}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

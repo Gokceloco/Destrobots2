@@ -44,6 +44,10 @@ public class Key : MonoBehaviour
         transform.DOMoveY(transform.position.y + 2, .6f)            
             .SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
     }
+    private void OnDestroy()
+    {
+        transform.DOKill();
+    }
 }
 
 public enum KeyType

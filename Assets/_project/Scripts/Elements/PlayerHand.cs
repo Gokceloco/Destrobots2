@@ -16,9 +16,14 @@ public class PlayerHand : MonoBehaviour
 
     private Transform _lastPickedBlock;
 
-    public void StartPlayerHand()
+    public void RestartPlayerHand()
     {
         acquiredKeys.Clear();
+        if (carryingCrate != null)
+        {
+            Destroy(carryingCrate.gameObject);
+            carryingCrate = null;
+        }
     }
 
     private void Update()
@@ -98,6 +103,8 @@ public class PlayerHand : MonoBehaviour
             if (collectable.collectableType == CollectableType.Serum)
             {
                 player.gameDirector.SerumCollected();
+                player.gameDirector.fxManager.PlaySerumPickedUpPS(other.transform.position);
+                player.gameDirector.audioManager.PlayPositiveSFX();
                 other.transform.parent.gameObject.SetActive(false);
             }
         }

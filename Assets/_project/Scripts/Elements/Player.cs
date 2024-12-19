@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public float cameraOffsetByLookDirection;
     public CameraHolder cameraHolder;
 
+    public PlayerHand playerHand;
+
     public float smoothTime;
     private Vector3 _velocity;
 
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
         _currentHealth = startHealth;
         healthBar.UpdateHealthBar(1);
         GetComponent<PlayerMovement>().ResetPlayerMovement();
+        playerHand.RestartPlayerHand();
     }
 
     private void Update()
@@ -45,6 +48,14 @@ public class Player : MonoBehaviour
         gameDirector.mainUI.playerHitUI.PlayGetHitFX();
         cameraHolder.ShakeCamera(.5f, .5f);  
         if (_currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("FallCollider"))
         {
             Die();
         }

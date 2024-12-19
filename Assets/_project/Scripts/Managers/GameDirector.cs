@@ -68,6 +68,11 @@ public class GameDirector : MonoBehaviour
     public void SerumCollected()
     {
         _levelStartTime += 20f;
+        if(startTime - Time.time + _levelStartTime > startTime)
+        {
+            var extraTime = startTime - Time.time + _levelStartTime - startTime;
+            _levelStartTime -= extraTime;
+        }
     }
 }
 

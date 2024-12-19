@@ -27,7 +27,7 @@ public class Block : MonoBehaviour
     {
         foreach (Enemy e in enemiesInMap)
         {
-            e.StartEnemy(_player);
+            e.StartEnemy(_player, this);
         }
     }
 
@@ -48,7 +48,7 @@ public class Block : MonoBehaviour
         {
             var newEnemy = Instantiate(enemyPrefab, transform);
             newEnemy.transform.localPosition = new Vector3(i - enemyCount / 2f, 0, 3.5f);
-            newEnemy.StartEnemy(_player);
+            newEnemy.StartEnemy(_player, this);
         }
     }
 }

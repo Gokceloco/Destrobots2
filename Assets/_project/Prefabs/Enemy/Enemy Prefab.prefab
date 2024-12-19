@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3323665854839848375}
   - component: {fileID: 2961546504907346507}
   - component: {fileID: 6629518032226858740}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DeadCollider
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -264,10 +264,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  startHealth: 1
+  startHealth: 10
   deadCoolider: {fileID: 6629518032226858740}
+  aliveColldier: {fileID: 1654055039184547999}
   chestBone: {fileID: 915317158226508329}
   healthBar: {fileID: 9212197748082795802}
+  seeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1032
+  serumPrefab: {fileID: 2927345048363050588, guid: ff6516402108da44098dd1c9970af8d7,
+    type: 3}
+  dropSerumChance: 0.2
 --- !u!54 &2149136819788085965
 Rigidbody:
   m_ObjectHideFlags: 0
