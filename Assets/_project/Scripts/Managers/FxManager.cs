@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class FxManager : MonoBehaviour
 {
     public ParticleSystem bulletHitPS;
     public ParticleSystem enemyExpirePS;
+    public ParticleSystem keyPickedUpPS;
     public void PlayBulletHitPS(Vector3 pos, Color color)
     {
         var newPS = Instantiate(bulletHitPS);
@@ -19,6 +21,13 @@ public class FxManager : MonoBehaviour
     public void PlayEnemyExpirePSDelayed(Transform t, float delay)
     {
         StartCoroutine(PlayEnemyExpirePS(t, delay));
+    }
+
+    public void PlayKeyPicekdUpPS(Vector3 pos)
+    {
+        var newPS = Instantiate(keyPickedUpPS);
+        newPS.transform.position = pos;
+        newPS.Play();
     }
 
     IEnumerator PlayEnemyExpirePS(Transform t, float delay)

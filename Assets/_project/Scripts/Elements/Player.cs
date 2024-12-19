@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
+        gameDirector.LevelFailed();
         gameObject.SetActive(false);
     }
 

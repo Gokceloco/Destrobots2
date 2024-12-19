@@ -84,12 +84,22 @@ public class PlayerHand : MonoBehaviour
         {
             player.gameDirector.mainUI.ShowMessage("KEY PICKED UP!", 3f);
             acquiredKeys.Add(other.GetComponentInParent<Key>().keyType);
-            other.gameObject.SetActive(false);
+            player.gameDirector.fxManager.PlayKeyPicekdUpPS(other.transform.position);
+            other.transform.parent.gameObject.SetActive(false);
         }
         if (other.CompareTag("Crate"))
         {
             player.gameDirector.mainUI.ShowMessage("HIT E TO INTERACT WITH OBJECTS!", 3f);
             touchingCrate = other.transform.parent;
+        }
+        if (other.CompareTag("Collectable"))
+        {
+            var collectable = other.GetComponentInParent<Collectable>();
+            if (collectable.collectableType == CollectableType.Serum)
+            {
+                player.gameDirector.SerumCollected();
+                other.transform.parent.gameObject.SetActive(false);
+            }
         }
     }
 

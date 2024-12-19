@@ -22,7 +22,9 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && Time.time - lastShootTime > attackRate)
+        if (gameDirector.gameState == GameState.Play 
+            && Input.GetMouseButton(0) 
+            && Time.time - lastShootTime > attackRate)
         {
             Shoot();
         }

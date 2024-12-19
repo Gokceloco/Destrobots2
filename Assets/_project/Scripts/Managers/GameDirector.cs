@@ -12,6 +12,12 @@ public class GameDirector : MonoBehaviour
 
     public MainUI mainUI;
 
+    public float startTime;
+    private float _remainingTime;
+    private float _levelStartTime;
+
+    public GameState gameState;
+
     private void Start()
     {
         RestartLevel();
@@ -23,18 +29,52 @@ public class GameDirector : MonoBehaviour
         {
             RestartLevel();
         }
+        _remainingTime = startTime - Time.time + _levelStartTime;
+        mainUI.UpdateTimer(_remainingTime / startTime);
+        if (_remainingTime <= 0)
+        {
+            LevelFailed();
+        }
     }
 
-    private void RestartLevel()
+    public void LevelFailed()
     {
+        mainUI.ShowFailUI();
+        gameState = GameState.FailUI;
+    }
+
+    public void RestartLevel()
+    {
+        gameState = GameState.Play;
         levelManager.DeleteLevel();
         levelManager.GenerateLevel();
         player.RestartPlayer();
         mainUI.RestartMainUI();
+        RestartTimer();
+        _levelStartTime = Time.time;
+        mainUI.failUI.Hide();
     }
 
     public void DoorIsLocked()
     {
         mainUI.ShowMessage("DOOR IS LOCKED! FIND THE KEY", 5);
     }
+
+    void RestartTimer()
+    {
+        mainUI.RestartTimer();
+    }
+
+    public void SerumCollected()
+    {
+        _levelStartTime += 20f;
+    }
+}
+
+public enum GameState
+{
+    Play,
+    FailUI,
+    VictoryUI,
+    GameMenu,
 }

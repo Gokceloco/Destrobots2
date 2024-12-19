@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  startHealth: 10
+  startHealth: 1
   deadCoolider: {fileID: 6629518032226858740}
   chestBone: {fileID: 915317158226508329}
   healthBar: {fileID: 9212197748082795802}
