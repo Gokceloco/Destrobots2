@@ -7,7 +7,9 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
     public CollectableType collectableType;
-    public void StartCollectable()
+    public bool isLevelEndSerum;
+
+    private void Start()
     {
         StartAnimation();
     }

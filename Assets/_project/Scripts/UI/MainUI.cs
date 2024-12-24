@@ -11,6 +11,8 @@ public class MainUI : MonoBehaviour
     public PlayerHitUI playerHitUI;
     public TimerUI timerUI;
     public FailUI failUI;
+    public VictoryUI victoryUI;
+    public LevelUI levelUI;
 
     public void RestartMainUI()
     {
@@ -20,11 +22,11 @@ public class MainUI : MonoBehaviour
         var sec = intTime % 60;
         if (sec == 0)
         {
-            ShowMessage("YOU'VE GOT " + min + ":00" + " MIN TO GET THE SERUM!", 3, .3f);
+            ShowMessage("YOU'VE GOT <color=#FF7D00>" + min + ":00" + " MIN</color> TO GET THE SERUM!", 3, .3f);
         }
         else
         {
-            ShowMessage("YOU'VE GOT " + min + ":" + sec + " MIN TO GET THE SERUM!", 3, .3f);
+            ShowMessage("YOU'VE GOT <color=#FF7D00>" + min + ":" + sec + " MIN</color> TO GET THE SERUM!", 3, .3f);
         }
     }
     public void ShowMessage(string msg, float duration, float delay = 0f)
@@ -43,5 +45,10 @@ public class MainUI : MonoBehaviour
     public void ShowFailUI()
     {
         failUI.Show();
+    }
+
+    public void ShowVictoryUI()
+    {
+        victoryUI.Show();
     }
 }

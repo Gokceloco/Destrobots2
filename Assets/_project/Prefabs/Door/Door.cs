@@ -19,6 +19,8 @@ public class Door : MonoBehaviour
     public Material lockedDoorMaterial;
     public Material unLockedDoorMaterial;
 
+    public bool showTutorial;
+
     private void Start()
     {
         if (isDoorLocked)

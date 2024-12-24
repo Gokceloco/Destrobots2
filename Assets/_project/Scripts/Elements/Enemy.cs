@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
     public Collectable serumPrefab;
 
     public float dropSerumChance;
+    public bool dropSerum;
 
     public void StartEnemy(Player player, Block block)
     {
@@ -68,7 +69,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        if (UnityEngine.Random.value < dropSerumChance)
+        if (dropSerum)
         {
             DropCollectable();
         }
@@ -84,7 +85,6 @@ public class Enemy : MonoBehaviour
     {
         var newCol = Instantiate(serumPrefab, _block.transform);
         newCol.transform.position = transform.position;
-        newCol.StartCollectable();
     }
 
     private void Update()
@@ -135,6 +135,10 @@ public class Enemy : MonoBehaviour
         {
             _isWalking = true;
             _animator.SetTrigger("Walk");
+            if (_player.gameDirector.levelManager.GetCurLevel() == 1)
+            {
+                _player.gameDirector.mainUI.ShowMessage("<color=#FF7D00>CLICK</color> TO SHOOT!", 3f);
+            }
         }
     }
 

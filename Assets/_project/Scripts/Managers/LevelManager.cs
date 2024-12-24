@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     public Enemy enemyPrefab;
 
     private bool _isLastBlockClosed;
+
     public void DeleteLevel()
     {
         foreach (var b in blocks) 
@@ -46,5 +47,37 @@ public class LevelManager : MonoBehaviour
             blocks.Add(newBlock);
             newBlock.StartBlock(i, player);
         }        
+    }
+    public void GenerateLevelNew()
+    {
+        var newBlock = Instantiate(blockPrefabs[GetCurLevel() - 1]);
+        newBlock.transform.position = Vector3.zero;
+        blocks.Add(newBlock);
+        newBlock.StartBlock(0, player);
+    }
+
+    public void SetCurLevel()
+    {
+        var levelNo = PlayerPrefs.GetInt("CurrentLevel");
+        if (levelNo == 0)
+        {
+            levelNo = 1;
+        }
+        PlayerPrefs.SetInt("CurrentLevel", levelNo);
+    }
+
+    public void IncreaseLevel()
+    {
+        PlayerPrefs.SetInt("CurrentLevel", PlayerPrefs.GetInt("CurrentLevel") + 1);
+    }
+
+    public int GetCurLevel()
+    {
+        return PlayerPrefs.GetInt("CurrentLevel");
+    }
+
+    public void ResetCurLevel()
+    {
+        PlayerPrefs.SetInt("CurrentLevel", 1);
     }
 }

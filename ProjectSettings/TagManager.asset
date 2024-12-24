@@ -12,6 +12,7 @@ TagManager:
   - Crate
   - Collectable
   - FallCollider
+  - MessageTrigger
   layers:
   - Default
   - TransparentFX

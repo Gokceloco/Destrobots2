@@ -69,7 +69,10 @@ public class PlayerHand : MonoBehaviour
         touchingCrate.transform.DOLocalMove(new Vector3(0, 1.5f, -1), .2f);
         touchingCrate.transform.DOLocalRotate(new Vector3(0, 90, 0), .2f);
         carryingCrate = touchingCrate;
-        player.gameDirector.mainUI.ShowMessage("HIT E TO DROP OBJECTS!", 3f);
+        if (player.gameDirector.levelManager.GetCurLevel() == 1)
+        {
+            player.gameDirector.mainUI.ShowMessage("<color=#FF7D00>E</color> TO DROP!", 3f);
+        }
     }
 
     void SetTransformToWorld(Transform t)
@@ -82,19 +85,25 @@ public class PlayerHand : MonoBehaviour
     {
         if (other.CompareTag("Door"))
         {
-            player.gameDirector.mainUI.ShowMessage("HIT E TO INTERACT WITH OBJECTS!", 3f);
+            if (other.GetComponent<Door>().showTutorial)
+            {
+                player.gameDirector.mainUI.ShowMessage("<color=#FF7D00>E</color> TO INTERACT!", 3f);
+            }
             touchingDoor = other.GetComponent<Door>();
         }
         if (other.CompareTag("Key"))
         {
-            player.gameDirector.mainUI.ShowMessage("KEY PICKED UP!", 3f);
+            player.gameDirector.mainUI.ShowMessage("KEY IS PICKED UP!", 3f);
             acquiredKeys.Add(other.GetComponentInParent<Key>().keyType);
             player.gameDirector.fxManager.PlayKeyPicekdUpPS(other.transform.position);
             other.transform.parent.gameObject.SetActive(false);
         }
         if (other.CompareTag("Crate"))
         {
-            player.gameDirector.mainUI.ShowMessage("HIT E TO INTERACT WITH OBJECTS!", 3f);
+            if (player.gameDirector.levelManager.GetCurLevel() == 1)
+            {
+                player.gameDirector.mainUI.ShowMessage("<color=#FF7D00>E</color> TO INTERACT!", 3f);
+            }
             touchingCrate = other.transform.parent;
         }
         if (other.CompareTag("Collectable"))
@@ -102,11 +111,22 @@ public class PlayerHand : MonoBehaviour
             var collectable = other.GetComponentInParent<Collectable>();
             if (collectable.collectableType == CollectableType.Serum)
             {
-                player.gameDirector.SerumCollected();
                 player.gameDirector.fxManager.PlaySerumPickedUpPS(other.transform.position);
                 player.gameDirector.audioManager.PlayPositiveSFX();
                 other.transform.parent.gameObject.SetActive(false);
+                if (collectable.isLevelEndSerum)
+                {
+                    player.gameDirector.LevelCompleted();
+                }
+                else
+                {
+                    player.gameDirector.SerumCollected();
+                }
             }
+        }
+        if (other.CompareTag("MessageTrigger"))
+        {
+            player.gameDirector.mainUI.ShowMessage(other.GetComponent<MessageTrigger>().msg, 3f);
         }
     }
 
