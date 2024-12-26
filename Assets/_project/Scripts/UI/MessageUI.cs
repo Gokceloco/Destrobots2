@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor.VersionControl;
 using DG.Tweening;
 
 public class MessageUI : MonoBehaviour

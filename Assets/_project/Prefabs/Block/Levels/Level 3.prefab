@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 3628270718248378109}
   - component: {fileID: 4048552293199535345}
   m_Layer: 3
-  m_Name: Block Prefab 3
+  m_Name: Level 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

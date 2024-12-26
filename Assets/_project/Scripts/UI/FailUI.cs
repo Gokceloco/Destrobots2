@@ -7,7 +7,7 @@ public class FailUI : MonoBehaviour
 {
     public void Show()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(true);        
         GetComponent<CanvasGroup>().DOFade(1, .2f);
     }
 

@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator _animator;
     private bool _isWalking;
 
+    private RaycastHit _groundRayHit;
+
     public void ResetPlayerMovement()
     {
         _rb = GetComponent<Rigidbody>();
@@ -40,15 +42,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (GetComponent<Player>().gameDirector.gameState != GameState.Play)
+        {
+            return;
+        }
         MovePlayer();
         if (doesPlayerLookAtMouse)
         {
             LookAtMouse();
         }
-
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, rayDistance, groundLayerMask))
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, rayDistance, groundLayerMask))
         {
             isTouchingGround = true;
+            _groundRayHit = hit;
         }
         else
         {
@@ -85,19 +92,68 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             direction += Vector3.forward;
+
+            var gorundNormal = _groundRayHit.normal;
+
+            if (gorundNormal.z < -0.25f)
+            {
+                gorundNormal.z = -gorundNormal.z;
+                gorundNormal.x = -gorundNormal.x;
+                direction += gorundNormal;
+                var v = _rb.velocity;
+                v.y = 0;
+                _rb.velocity = v;
+            }
         }
         if (Input.GetKey(KeyCode.S))
         {
             direction += Vector3.back;
+
+            var gorundNormal = _groundRayHit.normal;
+
+            if (gorundNormal.z > 0.25f)
+            {
+                gorundNormal.z = -gorundNormal.z;
+                gorundNormal.x = -gorundNormal.x;
+                direction += gorundNormal;
+                var v = _rb.velocity;
+                v.y = 0;
+                _rb.velocity = v;
+            }
         }
         if (Input.GetKey(KeyCode.A))
         {
             direction += Vector3.left;
+
+            var gorundNormal = _groundRayHit.normal;
+
+            if (gorundNormal.x > 0.25f)
+            {
+                gorundNormal.z = -gorundNormal.z;
+                gorundNormal.x = -gorundNormal.x;
+                direction += gorundNormal;
+                var v = _rb.velocity;
+                v.y = 0;
+                _rb.velocity = v;
+            }
         }
         if (Input.GetKey(KeyCode.D))
         {
             direction += Vector3.right;
+
+            var gorundNormal = _groundRayHit.normal;
+
+            if (gorundNormal.x < -0.25f)
+            {
+                gorundNormal.z = -gorundNormal.z;
+                gorundNormal.x = -gorundNormal.x;
+                direction += gorundNormal;
+                var v = _rb.velocity;
+                v.y = 0;
+                _rb.velocity = v;
+            }
         }
+        
         if (!Input.anyKey)
         {
             var v = _rb.velocity;
@@ -126,7 +182,12 @@ public class PlayerMovement : MonoBehaviour
                 _animator.SetTrigger("Idle");
             }
         }
-        _rb.position += direction.normalized * playerMoveSpeed * Time.deltaTime;
+        var tempSpeed = playerMoveSpeed;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            tempSpeed = playerMoveSpeed * 2;
+        }
+        _rb.position += direction.normalized * tempSpeed * Time.deltaTime;
         var angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
         _animator.SetFloat("WalkDirection", angle);
     }

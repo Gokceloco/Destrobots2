@@ -13,6 +13,7 @@ public class MainUI : MonoBehaviour
     public FailUI failUI;
     public VictoryUI victoryUI;
     public LevelUI levelUI;
+    public MainMenu mainMenu;
 
     public void RestartMainUI()
     {
@@ -45,10 +46,14 @@ public class MainUI : MonoBehaviour
     public void ShowFailUI()
     {
         failUI.Show();
+        timerUI.Hide();
+        levelUI.Hide();
     }
 
     public void ShowVictoryUI()
     {
         victoryUI.Show();
+        timerUI.Hide();
+        levelUI.Hide();
     }
 }

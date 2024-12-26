@@ -20,8 +20,9 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
+        mainUI.mainMenu.Show();
         levelManager.SetCurLevel();
-        RestartLevel();
+        //RestartLevel();
     }
 
     private void Update()
@@ -38,6 +39,10 @@ public class GameDirector : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             LoadPreviousLevel();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            mainUI.mainMenu.Show();
         }
         _remainingTime = startTime - Time.time + _levelStartTime;
         mainUI.UpdateTimer(_remainingTime / startTime);
@@ -64,9 +69,15 @@ public class GameDirector : MonoBehaviour
         gameState = GameState.FailUI;
     }
 
+    public void RestartLevelDelayed(float delay)
+    {
+        Invoke(nameof(RestartLevel), delay);
+    }
+
     public void RestartLevel()
     {
         gameState = GameState.Play;
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         levelManager.DeleteLevel();
         levelManager.GenerateLevelNew();
         player.RestartPlayer();
@@ -74,14 +85,18 @@ public class GameDirector : MonoBehaviour
         RestartTimer();
         _levelStartTime = Time.time;
         mainUI.failUI.Hide();
-        mainUI.victoryUI.Hide();
+        mainUI.levelUI.Show();
+        mainUI.timerUI.Show();
         mainUI.levelUI.SetLevelTMP(levelManager.GetCurLevel());
+        mainUI.mainMenu.HideCinematics();
     }
 
     public void LoadNextLevelButtonPressed()
     {
         levelManager.IncreaseLevel();
-        RestartLevel();
+        mainUI.mainMenu.PlayCinematic(PlayerPrefs.GetInt("CurrentLevel") - 1);
+        mainUI.victoryUI.Hide();
+        RestartLevelDelayed(5);
     }
 
     public void DoorIsLocked()
