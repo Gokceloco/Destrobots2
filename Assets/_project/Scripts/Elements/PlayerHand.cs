@@ -33,11 +33,11 @@ public class PlayerHand : MonoBehaviour
             if (haveKey && touchingDoor.isDoorLocked)
             {
                 haveKey = false;
-                touchingDoor.OpenCloseDoor(acquiredKeys);
+                touchingDoor.OpenCloseDoor(acquiredKeys, player);
             }
             else
             {
-                touchingDoor.OpenCloseDoor(acquiredKeys);
+                touchingDoor.OpenCloseDoor(acquiredKeys, player);
             }
             if (!haveKey && touchingDoor.isDoorLocked)
             {
@@ -59,6 +59,7 @@ public class PlayerHand : MonoBehaviour
         carryingCrate.transform.DOKill();
         carryingCrate.transform.DOLocalMove(new Vector3(0, -1, 1), .2f)
             .OnComplete(() => SetTransformToWorld(carryingCrate));
+        player.gameDirector.audioManager.PlayWhooshSFX();
     }
 
     private void PickUpCrate()
@@ -73,6 +74,7 @@ public class PlayerHand : MonoBehaviour
         {
             player.gameDirector.mainUI.ShowMessage("<color=#FF7D00>E</color> TO DROP!", 3f);
         }
+        player.gameDirector.audioManager.PlayWhooshSFX();
     }
 
     void SetTransformToWorld(Transform t)
@@ -85,7 +87,8 @@ public class PlayerHand : MonoBehaviour
     {
         if (other.CompareTag("Door"))
         {
-            if (other.GetComponent<Door>().showTutorial)
+            var door = other.GetComponent<Door>();
+            if (door != null && other.GetComponent<Door>().showTutorial)
             {
                 player.gameDirector.mainUI.ShowMessage("<color=#FF7D00>E</color> TO INTERACT!", 3f);
             }
@@ -95,8 +98,9 @@ public class PlayerHand : MonoBehaviour
         {
             player.gameDirector.mainUI.ShowMessage("KEY IS PICKED UP!", 3f);
             acquiredKeys.Add(other.GetComponentInParent<Key>().keyType);
-            player.gameDirector.fxManager.PlayKeyPicekdUpPS(other.transform.position);
+            player.gameDirector.fxManager.PlayKeyPickedUpPS(other.transform.position);
             other.transform.parent.gameObject.SetActive(false);
+            player.gameDirector.audioManager.PlayPickUpPositiveSFX();
         }
         if (other.CompareTag("Crate"))
         {

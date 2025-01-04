@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
 
     private RaycastHit _groundRayHit;
 
+    public ParticleSystem jumpPS;
+
     public void ResetPlayerMovement()
     {
         _rb = GetComponent<Rigidbody>();
@@ -54,6 +56,11 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, rayDistance, groundLayerMask))
         {
+            if (!isTouchingGround)
+            {
+                _animator.SetTrigger("Idle");
+                _isWalking = false;
+            }
             isTouchingGround = true;
             _groundRayHit = hit;
         }
@@ -66,11 +73,19 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
         }
+
+        if (isTouchingGround)
+        {
+            jumpPS.transform.position = hit.point + Vector3.up * .05f;
+        }
     }
 
     private void Jump()
     {
+        _animator.SetTrigger("Jump");
         _rb.AddForce(Vector3.up * jumpForce);
+        GetComponent<Player>().gameDirector.audioManager.PlayWhooshSFX();
+        jumpPS.Play();
     }
 
     private void LookAtMouse()
@@ -192,5 +207,28 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetFloat("WalkDirection", angle);
     }
 
-    
+
+    public void PlayThrowGrenadeAnimation()
+    {
+        //_animator.SetTrigger("ThrowGrenade");
+        _animator.CrossFade("Throw Grenade", .1f);
+        Invoke(nameof(TriggerGrenadeThrowEndAction), .15f);
+    }
+
+    void TriggerGrenadeThrowEndAction()
+    {
+        if (_isWalking)
+        {
+            _animator.SetTrigger("Walk");
+        }
+        else
+        {
+            _animator.SetTrigger("Idle");
+        }
+    }
+
+    public void PlayWeaponChangeAnimation()
+    {
+        _animator.SetTrigger("WeaponChange");
+    }
 }

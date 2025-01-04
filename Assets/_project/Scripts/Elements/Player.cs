@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 
     public ParticleSystem hitPS;
 
+    public List<Weapon> weapons;
+
     public void RestartPlayer()
     {
         transform.position = Vector3.zero;
@@ -30,6 +32,12 @@ public class Player : MonoBehaviour
         healthBar.UpdateHealthBar(1);
         GetComponent<PlayerMovement>().ResetPlayerMovement();
         playerHand.RestartPlayerHand();
+        weapons.Clear();
+        foreach (var w in GetComponentsInChildren<Weapon>())
+        {
+            weapons.Add(w);
+        }
+        ChangeWeapon(0);
     }
 
     private void Update()
@@ -75,8 +83,29 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         var pos = transform.position + transform.forward * cameraOffsetByLookDirection;
-        //pos.y = 0f;
         cameraHolder.transform.position             
             = Vector3.SmoothDamp(cameraHolder.transform.position, pos, ref _velocity, smoothTime);
+    }
+
+    public void ThrowGrenade()
+    {
+        GetComponent<PlayerMovement>().PlayThrowGrenadeAnimation();
+    }
+
+    public void ChangeWeapon(int i)
+    {
+        GetComponent<PlayerMovement>().PlayWeaponChangeAnimation();
+
+        StartCoroutine(ChangeWeaponDelayed(.3f, i));
+    }
+
+    IEnumerator ChangeWeaponDelayed(float delay, int index)
+    {
+        yield return new WaitForSeconds(delay);
+        foreach (var w in weapons)
+        {
+            w.gameObject.SetActive(false);
+        }
+        weapons[index].gameObject.SetActive(true);
     }
 }

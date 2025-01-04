@@ -8,6 +8,8 @@ public class MessageUI : MonoBehaviour
 {
     public TextMeshProUGUI msgTMP;
 
+    public GameObject keyCard;
+
     public void Show(float delay)
     {
         gameObject.SetActive(true);
@@ -24,10 +26,18 @@ public class MessageUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void ShowMessage(string msg, float duration, float delay = 0)
+    public void ShowMessage(string msg, float duration, float delay = 0, bool showKeyCard = false)
     {
         Show(delay);
         msgTMP.text = msg;
         Invoke(nameof(Hide), duration);
+        if (showKeyCard)
+        {
+            keyCard.SetActive(true);
+        }
+        else
+        {
+            keyCard.SetActive(false);
+        }
     }
 }

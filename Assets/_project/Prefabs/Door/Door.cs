@@ -33,7 +33,7 @@ public class Door : MonoBehaviour
         }
     }
 
-    public void OpenCloseDoor(List<KeyType> acquiredKey)
+    public void OpenCloseDoor(List<KeyType> acquiredKey, Player player)
     {
         var haveKey = false;
         foreach (var key in acquiredKey) 
@@ -45,6 +45,7 @@ public class Door : MonoBehaviour
         }
         if (isDoorLocked && !haveKey)
         {
+            player.gameDirector.audioManager.PlayDoorIsLockedSFX();
             return;
         }
         if (isDoorClosed)
@@ -53,6 +54,7 @@ public class Door : MonoBehaviour
             rightDoor.transform.DOLocalMoveZ(rightDoor.transform.localPosition.z - 1, .3f);
             isDoorClosed = false;
             isDoorLocked = false;
+            player.gameDirector.audioManager.PlayDoorOpenSFX();
         }
         else
         {

@@ -31,7 +31,7 @@ public class FxManager : MonoBehaviour
         StartCoroutine(PlayEnemyExpirePS(t, delay));
     }
 
-    public void PlayKeyPicekdUpPS(Vector3 pos)
+    public void PlayKeyPickedUpPS(Vector3 pos)
     {
         var newPS = Instantiate(keyPickedUpPS);
         newPS.transform.position = pos;

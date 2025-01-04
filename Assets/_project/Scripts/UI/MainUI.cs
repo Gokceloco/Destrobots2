@@ -13,6 +13,7 @@ public class MainUI : MonoBehaviour
     public FailUI failUI;
     public VictoryUI victoryUI;
     public LevelUI levelUI;
+    public InventoryUI inventoryUI;
     public MainMenu mainMenu;
 
     public void RestartMainUI()
@@ -30,9 +31,9 @@ public class MainUI : MonoBehaviour
             ShowMessage("YOU'VE GOT <color=#FF7D00>" + min + ":" + sec + " MIN</color> TO GET THE SERUM!", 3, .3f);
         }
     }
-    public void ShowMessage(string msg, float duration, float delay = 0f)
+    public void ShowMessage(string msg, float duration, float delay = 0f, bool showKeyCard = false)
     {
-        messageUI.ShowMessage(msg, duration, delay);
+        messageUI.ShowMessage(msg, duration, delay, showKeyCard);
     }
     public void RestartTimer()
     {
@@ -48,6 +49,7 @@ public class MainUI : MonoBehaviour
         failUI.Show();
         timerUI.Hide();
         levelUI.Hide();
+        inventoryUI.Hide();
     }
 
     public void ShowVictoryUI()
@@ -55,5 +57,11 @@ public class MainUI : MonoBehaviour
         victoryUI.Show();
         timerUI.Hide();
         levelUI.Hide();
+        inventoryUI.Hide();
+    }
+
+    public void ShowInventoryUI()
+    {
+        inventoryUI.ToggleOpenCloseInventory();
     }
 }

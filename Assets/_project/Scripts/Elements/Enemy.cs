@@ -34,14 +34,35 @@ public class Enemy : MonoBehaviour
     public float dropSerumChance;
     public bool dropSerum;
 
+    public ZombieMesh zombieMeshType;
+    public List<GameObject> zombieMeshes;
+
     public void StartEnemy(Player player, Block block)
     {
         _player = player;
         _rb = GetComponent<Rigidbody>();
         _block = block;
         _currentHealth = startHealth;
-        _animator = GetComponentInChildren<Animator>();
+        ActivateZombieMesh();
         RandomizeIdle();
+    }
+
+    private void ActivateZombieMesh()
+    {
+        foreach (var zm in zombieMeshes)
+        {
+            zm.gameObject.SetActive(false);
+        }
+        if (zombieMeshType == ZombieMesh.Realistic)
+        {
+            zombieMeshes[0].SetActive(true);
+            _animator = zombieMeshes[0].GetComponent<Animator>();
+        }
+        else if (zombieMeshType == ZombieMesh.Casual)
+        {
+            zombieMeshes[1].SetActive(true);
+            _animator = zombieMeshes[1].GetComponent<Animator>();
+        }
     }
 
     private void RandomizeIdle()
@@ -114,7 +135,6 @@ public class Enemy : MonoBehaviour
         RaycastHit hit;
         var directionVector = (_player.transform.position + Vector3.up) 
             - (transform.position + Vector3.up);
-        Debug.DrawRay(transform.position + Vector3.up, directionVector, Color.red);
         if (Physics.Raycast(transform.position + Vector3.up,
             directionVector, out hit,
             directionVector.magnitude, seeLayerMask))
@@ -139,6 +159,7 @@ public class Enemy : MonoBehaviour
             {
                 _player.gameDirector.mainUI.ShowMessage("<color=#FF7D00>CLICK</color> TO SHOOT!", 3f);
             }
+            _player.gameDirector.audioManager.PlayZombieAttackSFX();
         }
     }
 
@@ -167,4 +188,10 @@ public class Enemy : MonoBehaviour
     {
         _isHittingPlayer = false;
     }
+}
+
+public enum ZombieMesh
+{
+    Realistic,
+    Casual,
 }

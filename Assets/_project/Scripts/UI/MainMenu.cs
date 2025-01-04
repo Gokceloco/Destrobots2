@@ -28,14 +28,30 @@ public class MainMenu : MonoBehaviour
     {
         Invoke(nameof(Hide), .25f);
         gameDirector.levelManager.ResetCurLevel();
-        PlayCinematic(PlayerPrefs.GetInt("CurrentLevel") - 1);
-        gameDirector.RestartLevelDelayed(5);
+        var levelNo = PlayerPrefs.GetInt("CurrentLevel");
+        PlayCinematic(levelNo - 1);
+        var startDelay = 0;
+        if (levelNo == 1)
+        {
+            startDelay = 9;
+            gameDirector.mainUI.inventoryUI.Hide();
+        }
+        gameDirector.RestartLevelDelayed(startDelay);
+        gameDirector.audioManager.PlayButtonPressedSFX();
     }
     public void ResumeGameButtonPressed()
     {
         Hide();
-        PlayCinematic(PlayerPrefs.GetInt("CurrentLevel") - 1);
-        gameDirector.RestartLevelDelayed(5);
+        var levelNo = PlayerPrefs.GetInt("CurrentLevel");
+        var startDelay = 0;
+        if (levelNo == 1)
+        {
+            startDelay = 9;
+            gameDirector.mainUI.inventoryUI.Hide();
+        }
+        gameDirector.RestartLevelDelayed(startDelay);
+        gameDirector.audioManager.PlayButtonPressedSFX();
+
     }
     public void PlayCinematic(int i)
     {

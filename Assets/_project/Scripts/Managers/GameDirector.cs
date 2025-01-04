@@ -32,9 +32,15 @@ public class GameDirector : MonoBehaviour
             levelManager.ResetCurLevel();
             RestartLevel();
         }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            mainUI.ShowInventoryUI();
+        }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            LoadNextLevelButtonPressed();
+            levelManager.IncreaseLevel();
+            RestartLevel();
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -85,8 +91,11 @@ public class GameDirector : MonoBehaviour
         RestartTimer();
         _levelStartTime = Time.time;
         mainUI.failUI.Hide();
+        mainUI.victoryUI.Hide();
         mainUI.levelUI.Show();
         mainUI.timerUI.Show();
+        mainUI.inventoryUI.Show();
+        mainUI.inventoryUI.StartInventoryUI(this);
         mainUI.levelUI.SetLevelTMP(levelManager.GetCurLevel());
         mainUI.mainMenu.HideCinematics();
     }
@@ -94,14 +103,13 @@ public class GameDirector : MonoBehaviour
     public void LoadNextLevelButtonPressed()
     {
         levelManager.IncreaseLevel();
-        mainUI.mainMenu.PlayCinematic(PlayerPrefs.GetInt("CurrentLevel") - 1);
         mainUI.victoryUI.Hide();
-        RestartLevelDelayed(5);
+        RestartLevel();
     }
 
     public void DoorIsLocked()
     {
-        mainUI.ShowMessage("DOOR IS LOCKED! FIND THE KEY", 5);
+        mainUI.ShowMessage("DOOR IS LOCKED! FIND THE KEY", 5, 0, true);
     }
 
     void RestartTimer()

@@ -55,6 +55,7 @@ MonoBehaviour:
   lockedDoorMaterial: {fileID: 2100000, guid: f5e61e02adb694d4b858c709d6da4225, type: 2}
   unLockedDoorMaterial: {fileID: 2100000, guid: f95161eaf261b124593b99c16d8c1d8b,
     type: 2}
+  showTutorial: 0
 --- !u!65 &6479323286091167926
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -87,7 +88,6 @@ GameObject:
   - component: {fileID: 4656360421176542542}
   - component: {fileID: 4674926853126523640}
   - component: {fileID: 763383878017524095}
-  - component: {fileID: 7616203561864837709}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -160,27 +160,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7616203561864837709
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8937892885425187562}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5900145105881223617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -253,6 +232,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sci Fi Gates
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972167997025983193, guid: 22d2c44fed4ffa743aac7afe4d993905,
+        type: 3}
+      propertyPath: m_TagString
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972167997025983199, guid: 22d2c44fed4ffa743aac7afe4d993905,
+        type: 3}
+      propertyPath: m_TagString
+      value: Door
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
