@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayerMask;
 
     private Animator _animator;
-    private bool _isWalking;
+    public bool _isWalking;
 
     private RaycastHit _groundRayHit;
 

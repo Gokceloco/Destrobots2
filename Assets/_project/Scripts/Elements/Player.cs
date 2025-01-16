@@ -32,11 +32,6 @@ public class Player : MonoBehaviour
         healthBar.UpdateHealthBar(1);
         GetComponent<PlayerMovement>().ResetPlayerMovement();
         playerHand.RestartPlayerHand();
-        weapons.Clear();
-        foreach (var w in GetComponentsInChildren<Weapon>())
-        {
-            weapons.Add(w);
-        }
         ChangeWeapon(0);
     }
 

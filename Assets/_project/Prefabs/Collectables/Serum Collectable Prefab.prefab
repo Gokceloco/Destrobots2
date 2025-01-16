@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectableType: 1
+  isLevelEndSerum: 0
 --- !u!1001 &463069458545755465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -189,6 +190,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 959045695851553922}
     m_Modifications:
+    - target: {fileID: 693727158945211194, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.7425
+      objectReference: {fileID: 0}
+    - target: {fileID: 693727158945211194, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.7425
+      objectReference: {fileID: 0}
+    - target: {fileID: 693727158945211194, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.7425
+      objectReference: {fileID: 0}
     - target: {fileID: 693727158945211194, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -361,7 +377,7 @@ PrefabInstance:
     - target: {fileID: 1934378789368288945, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
         type: 3}
       propertyPath: RotationModule.curve.scalar
-      value: 3.1415925
+      value: 1.5707963
       objectReference: {fileID: 0}
     - target: {fileID: 1934378789368288945, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
         type: 3}
@@ -380,6 +396,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1934378789368288945, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
         type: 3}
+      propertyPath: RotationModule.curve.minScalar
+      value: 0.2617994
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934378789368288945, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
+        type: 3}
       propertyPath: RotationModule.curve.minMaxState
       value: 3
       objectReference: {fileID: 0}
@@ -387,6 +408,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startSize.minScalar
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934378789368288945, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1934378789368288945, guid: 38a0db34b33eb294bbaf7f0b0816f6e4,
         type: 3}

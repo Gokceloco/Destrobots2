@@ -31,6 +31,7 @@ public class Weapon : MonoBehaviour
     public Vector3 rotationVector;
 
     public WeaponType weaponType;
+    [SerializeField] private int bulletCount;
 
     void Update()
     {
@@ -109,7 +110,7 @@ public class Weapon : MonoBehaviour
 
     void ShootForShotGun()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < bulletCount; i++)
         {
             var newBullet = Instantiate(bulletPrefab);
             newBullet.transform.position = bulletSpawnPoint.position;

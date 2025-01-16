@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -11,6 +12,11 @@ public class Bullet : MonoBehaviour
     public float maxDistance;
 
     private Rigidbody _rb;
+    private bool _isDestroyed;
+
+    public GameObject mesh;
+    public ParticleSystem glowPS;
+    public TrailRenderer trail;
     public void StartBullet(GameDirector gameDirector)
     {
         _rb = GetComponent<Rigidbody>();
@@ -19,11 +25,27 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        _rb.position += transform.forward * Time.deltaTime * bulletSpeed;
         if ((transform.position - _gameDirector.player.transform.position).magnitude > maxDistance)
         {
-            Destroy(gameObject);
+            if (!_isDestroyed)
+            {
+                _isDestroyed = true;
+                DestroyBullet();
+            }
         }
+        else
+        {
+            _rb.position += transform.forward * Time.deltaTime * bulletSpeed;
+        }
+    }
+
+    void DestroyBullet()
+    {
+        mesh.SetActive(false);
+        glowPS.Stop();
+        glowPS.transform.DOScale(0, .2f);
+        trail.emitting = false;
+        Destroy(gameObject, .5f);
     }
 
     private void OnTriggerEnter(Collider other)

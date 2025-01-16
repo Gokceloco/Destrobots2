@@ -277,7 +277,7 @@ MonoBehaviour:
     type: 3}
   dropSerumChance: 0.2
   dropSerum: 0
-  zombieMeshType: 0
+  zombieMeshType: 1
   zombieMeshes:
   - {fileID: 4101714313354550489}
   - {fileID: 4762648430055423623}

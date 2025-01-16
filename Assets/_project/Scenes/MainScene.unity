@@ -1260,6 +1260,7 @@ MonoBehaviour:
   grenadeThrowDuration: 0.5
   rotationVector: {x: 360, y: 0, z: 0}
   weaponType: 1
+  bulletCount: 20
 --- !u!4 &319589094
 Transform:
   m_ObjectHideFlags: 0
@@ -4778,6 +4779,7 @@ MonoBehaviour:
   grenadeThrowDuration: 0.5
   rotationVector: {x: 360, y: 0, z: 0}
   weaponType: 0
+  bulletCount: 0
 --- !u!4 &981377027 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3448128835326887720, guid: 63f0c6b354ae26e44b961cec6940e188,
@@ -5664,6 +5666,7 @@ MonoBehaviour:
   grenadeThrowDuration: 0.5
   rotationVector: {x: 360, y: 0, z: 0}
   weaponType: 0
+  bulletCount: 0
 --- !u!1 &1267404648
 GameObject:
   m_ObjectHideFlags: 0
@@ -6996,6 +6999,7 @@ MonoBehaviour:
   grenadeThrowDuration: 0.5
   rotationVector: {x: 360, y: 0, z: 0}
   weaponType: 1
+  bulletCount: 0
 --- !u!4 &1591390797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 5538740e3725df649ab989c032865338,
@@ -9184,6 +9188,7 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 1096
+  _isWalking: 0
   jumpPS: {fileID: 1679908464}
 --- !u!114 &2084266469
 MonoBehaviour:
